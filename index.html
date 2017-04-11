@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>GitBot - Web</title>
+<style>
+body { margin: 0; padding: 0; }
+#logoBar {
+    background-color: #ffffff;
+    height: 10%;
+}
+#logoPng {
+    height: 100%;
+}
+
+#midBar {
+    height: 80%;
+    width: 100%;
+    background-color: #000000;
+}
+
+#sendBar {
+    height: 10;
+    background-color: #ffffff;
+}
+
+.vAlign {
+  position: relative;
+}
+</style>
+</head>
+<!-- Logo bar -->
+<div id="logoBar">
+<center>
+<img id="logoPng" src="gitbotlogo.png" />
+</center>
+</div>
+<!-- Mid bar - Iframe -->
+<div id="midBar">
+<iframe id="midFrame" src="" frameBorder="0" width="100%" height="100%">
+Your browser doesn't appear to support GitBot :(.<br />
+Try enabling Javascript or changing to a different browser.
+</iframe>
+</div>
+<!-- Bottom send bar -->
+<div id="sendBar">
+<center>
+<input type="text" width="50%" class="vAlign" id="msgInput" onkeydown="if (event.keyCode == 13) { sendUserMessage(); }">
+<button width="20%" class="vAlign" onclick="sendUserMessage();">Send</button>
+</center>
+</div>
+
+<script>
+//User token generator
+//Generate a user token and give it to the PHP file
+var GlobalToken = "";
+function assignUserToken() {
+    //Tokens are 7 digits
+    var userToken = Math.floor((Math.random() * 9999998) + 1000001);
+    GlobalToken = userToken;
+    //Navigate to the chat page
+    document.getElementById("midFrame").src = "createChat.php?token=" + userToken.toString();
+}
+function sendUserMessage() {
+    //Send message to bot
+    document.getElementById("midFrame").src = "userMessage.php?token=" + GlobalToken.toString() + "&msg=" + document.getElementById("msgInput").value;
+    document.getElementById("msgInput").value = "";
+}
+
+assignUserToken();
+</script>
+</html>
