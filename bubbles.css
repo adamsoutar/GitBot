@@ -249,21 +249,25 @@
   padding: 1em;
 	text-align: left;
   line-height: 1.5em;
+	margin: 0;
 }
 .talktext p{
   /* remove webkit p margins */
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
+	margin: 0;
 }
 .talktext1{
   padding: 1em;
 	text-align: left;
   line-height: 1.5em;
+	margin: 0;
 }
 .talktext1 p{
   /* remove webkit p margins */
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
+	margin: 0;
   color: white;
 }
 .talktext2{
