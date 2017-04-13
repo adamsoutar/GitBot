@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>jQuery JSON Parsing example</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html, body {
+    margin: 0;
+    background-color: #24292f
+}
+.logoBar {
+    background-color: #24292f;
+    height: 10%;
+    width: 100%;
+}
+.midSection {
+    background-color: #24292f;
+    height: 80%;
+    width: 100%;
+    /*padding-bottom: 10%; */
+    overflow-y: auto;
+}
+.sendBar {
+    background-color: rgba(28, 33, 37, 0.9);
+    height: 10%;
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    bottom: 0;
+}
+.centered {
+    margin: auto;
+}
+.vAlign {
+  position: relative;
+  margin-top: 20px;
+  height: 25px;
+}
+#msgInput {
+    width: 40%;
+}
+#sendButton {
+    width: 5%;
+}
+.botLogo {
+    padding: 35px;
+    height: 50px;
+    position: fixed;
+    top: 0;
+}
+#msgInput {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: white;
+    border-bottom: 1px solid gray;
+}
+#msgInput:focus {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: white;
+    border-bottom: 1px solid silver;
+}
+#sendButton {
+    background: white;
+    border: 1px solid silver;
+    color: black;
+    border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<header class="logoBar">
+<img src="botlogo.png" class="botLogo" />
+</header>
+
+<div class="midSection"><center>
+<font face="Tahoma" color="#fffff" id="resBox">
+</font></center>
+</div>
+
+<footer class="sendBar"><center>
+<center>
+<input type="text" width="50%" class="vAlign" id="msgInput" onkeydown="if (event.keyCode == 13) { sendMessageToListener(); }">
+<button width="20%" class="vAlign" onclick="sendMessageToListener();" id="sendButton">Send</button>
+</center>
+
+<script type="text/javascript">
+var GlobalToken = "";
+
+function assignUserToken() {
+    //Tokens are 7 digit numbers used to identify users
+    var userToken = Math.floor((Math.random() * 9999998) + 1000001);
+    GlobalToken = userToken;
+}
+
+function setupChat() {
+    //Give us a token
+    assignUserToken();
+    //Set up a new chat with the bot, tell it our token
+    jQuery.get("createNewChat.php?token=" + GlobalToken.toString(), "html");
+}
+
+function appendToMainSection(appendString) {
+    document.getElementById("resBox").innerHTML = document.getElementById("resBox").innerHTML + appendString
+}
+
+function appendBotSpeechBubble(botStr) {
+    appendToMainSection("<br /><b>GitBot: </b>" + botStr.toString())
+}
+
+function appendUserSpeechBubble(usrStr) {
+    appendToMainSection("<br /><b>User: </b>" + usrStr.toString())
+}
+
+function sendMessageToListener() {
+    //Send message to PHP
+    var userMessage = document.getElementById("msgInput").value;
+    document.getElementById("msgInput").value = "";
+    appendUserSpeechBubble(userMessage);
+    $.ajax({type: "POST", url: "mainListener.php",dataType: "json", data: {msg : userMessage, token : GlobalToken}, success: function(result){
+        //document.getElementById("resBox").innerHTML = result.response;
+        appendBotSpeechBubble(result.response);
+    }});
+}
+
+//Set up a chat
+setupChat();
+appendBotSpeechBubble("First thing's first, are you looking for a user or an organisation?");
+</script>
+
+</center></footer>
+
+</body>
+</html>

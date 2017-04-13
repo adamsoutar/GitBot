@@ -1,20 +1,17 @@
-<html>
-<body>
 <?php
-//ANSWER INTERPRETER
+//ONE RESPONSE ANSWER INTERPRETER
+//New version which responds is JSON
 
-$userToken = $_GET['token'];
+$GLOBALS['response'] = "";
 
 function setStageNum($newStage) {
-    $stageFile = fopen("./users/stages/".$_GET['token'].".txt", "w");
+    $stageFile = fopen("./users/stages/".$_POST['token'].".txt", "w");
     fwrite($stageFile, $newStage);
     fclose($stageFile);
 }
-function addToHistory($addString) {
+function addToResponse($addString) {
     //Write the string
-    $hisFile = fopen("./users/history/".$_GET['token'].".txt", "a");
-    fwrite($hisFile, $addString);
-    fclose($hisFile);
+    $GLOBALS['response'] = $GLOBALS['response'].$addString."<br />";
 }
 
 //cURL - Important for getting responses from the GitHub API
@@ -63,13 +60,26 @@ function detailsForUser($searchString) {
         return "The user couldn't be found! :(";
     }    
 }
+function listUserRepos($userName) {
+    $GitHubResponse = basicCurl("https://api.github.com/users/".$userName."/repos");
+    $jsonResult = json_decode($GitHubResponse, true);
+    if ($jsonResult['message']!="Not Found") {
+        $returnString = "Here are the repos for the user ".$searchString.": <br />";
+        foreach ($jsonResult as $currentItem) {
+            $returnString = $returnString."<br /><b>".$currentItem['name']."</b><br /><i>Description:</i> ".$currentItem['description']."<br /><i>Language: </i>".$currentItem['language']."<br /><i>Repo link: </i> <a href='".$currentItem['html_url']."'>".$currentItem['html_url']."</a><br />";
+        }
+        return $returnString;
+    } else {
+        return "An error occurred. :(";
+    }    
+}
 
 //Read the current stage
 $stageFile = fopen("./users/stages/".$userToken.".txt", "r");
 $currentStage = fread($stageFile, filesize("./users/stages/".$userToken.".txt"));
 fclose($stageFile);
 
-$userMessage = $_GET['msg'];
+$userMessage = $_POST['msg'];
 
 switch ($currentStage) {
     case "-1" :
@@ -84,38 +94,47 @@ switch ($currentStage) {
             //If the string contains org
             setStageNum("2");
         } else {
-            addToHistory("0Sorry, I didn't understand the answer you gave. Let's try again.\n");
+            addToResponse("Sorry, I didn't understand the answer you gave. Let's try again.");
             //Keep the stage number at 0 so it repeats the phrase
         }
         break;
     case "1":
         //They're searching for a user
         $searchResponse = searchForUser($userMessage);
-        addToHistory("0".$searchResponse);
+        addToResponse($searchResponse);
         //TODO: Skip straight to details if there was only 1 result for the search
         setStageNum("3");
         break;
     case "2":
         //TODO: Implement this
-        addToHistory("0Sorry! This conversation path isn't implemented yet. Please refresh the page.\n");
+        addToResponse("Sorry! This conversation path isn't implemented yet. Please refresh the page.");
         break;
     case "3":
         //They've told us a specific user
         //TODO: Execute this in a function
         $searchResponse2 = detailsForUser($userMessage);
-        addToHistory("0".$searchResponse2."\n");
+        addToResponse($searchResponse2);
         if ($searchResponse2!="The user couldn't be found! :(") {
+            //Cache the user we're looking at
+            setcookie("userCache", $userMessage, time() + (86400 * 2), "/"); // 86400 = 1 day
             setStageNum("4");
         } else {
             //We didn't find them, don't change stage
-            addToHistory("0Please try another user.");
+            addToResponse("0Please try another user.");
         }
         break;
     case "4":
         //They have responded with REPO, SOMEONE ELSE, or START
         if (strpos(strtolower($userMessage), 'repo') !== false) {
             //If the string contains REPO
-            setStageNum("5");
+            $searchResponse3 = listUserRepos($_COOKIE['userCache']);
+            addToResponse($searchResponse3);
+            if ($searchResponse3!="An error occurred. :(") {
+                setStageNum("5");
+            } else {
+                //We didn't find them, don't change stage
+                addToResponse("0Please try another user.");
+            }
         } elseif (strpos(strtolower($userMessage), 'else') !== false) {
             //If the string contains SOMEONE ELSE
             setStageNum("3");
@@ -123,22 +142,15 @@ switch ($currentStage) {
             //If the string contains SOMEONE ELSE
             setStageNum("3");
         } elseif (strpos(strtolower($userMessage), 'start') !== false) {
-            setStageNum("-1");
+            //RESET THE CHAT
+            //TODO: Implement this
         } else {
-            addToHistory("0Sorry, I didn't understand the answer you gave. Let's try again.\n");
+            addToResponse("Sorry, I didn't understand the answer you gave. Let's try again.");
             //Keep the stage number at 4 so it repeats the phrase
         }
     case "5":
-        //REPOS
-        //TODO: Implement this
+        //Something here
+        //Probably more info on repos
 }
 
 ?>
-<script type="text/javascript">
-//Redirect to answer interpretation
-var userToken = <?php echo $_GET['token']; ?>;
-window.location = "mainChat.php?token=" + userToken.toString();
-</script>
-
-</body>
-</html>

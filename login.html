@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>GitBot - Login</title>
+<style>
+html, body {
+    background-color: #24292f;
+}
+.boxShadow {
+    -webkit-box-shadow: 0px 0px 82px 0px rgba(100,100,100,0.75);
+    -moz-box-shadow: 0px 0px 82px 0px rgba(100,100,100,100.75);
+    box-shadow: 0px 0px 82px 0px rgba(100,100,100,0.75);
+}
+.loginBox {
+    width: 100%;
+    height: 60%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    margin: auto;
+}
+.logoImage {
+    margin: auto;
+    height: 75px;
+    width: 75px;
+}
+.nameSelect {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    background-color: #5f6368;
+}
+.loginSpacer {
+    width: 100%;
+    height: 20px;
+}
+.centered {
+    margin: auto;
+}
+.nameInput {
+    width: 40%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: white;
+    border-bottom: 1px solid gray;
+    text-align: center;
+    font-size: 25px;
+}
+</style>
+</head>
+<body>
+<div class="loginBox">
+
+    <div class="logoImage">
+        <img src="githublogo.png" height="100%" width="100%" />
+    </div>
+
+    <div class="loginSpacer"></div>
+
+    <div class="nameSelect boxShadow"> 
+        <center>
+        <font face="arial" color="#ffffff" class="centered"><br />
+            <h1>GitBot</h1>
+            <!--<img src="botlogo.png" />--><br /><br />
+            Hi! What's your name?<br />
+        <br />
+            <input type="text" class="nameInput" />
+        </font></center>
+    </div>
+
+</div>
+</body>
+</html>

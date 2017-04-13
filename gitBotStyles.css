@@ -1,0 +1,179 @@
+html, body {
+    margin: 0;
+    background-color: #24292f
+}
+.logoBar {
+    background-color: rgba(36, 41, 47, 0.5);
+    height: 10%;
+    width: 100%;
+    z-index: 9999;
+}
+.midSection {
+    background-color: transparent;
+    height: 80%;
+    width: 100%;
+    /*padding-bottom: 10%; */
+    overflow-y: auto;
+    z-index: 2;
+}
+.sendBar {
+    background-color: rgba(28, 33, 37, 0.9);
+    height: 10%;
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    bottom: 0;
+}
+.centered {
+    margin: auto;
+}
+.vAlign {
+  position: relative;
+  margin-top: 20px;
+  height: 25px;
+}
+.botLogo {
+    padding: 35px;
+    height: 50px;
+    position: fixed;
+    top: 0;
+}
+#msgInput {
+    width: 40%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: white;
+    border-bottom: 1px solid gray;
+}
+#msgInput:focus {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: white;
+    border-bottom: 1px solid white;
+}
+#sendButton {
+    width: 5%;
+    background: #7bc236;
+    border: 0;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+    outline: 0;
+}
+#sendButton:hover {
+    background: #8de835;
+    border: 0;
+    outline: 0;
+}
+#sendButton:active {
+    background: #4a7a1c;
+    border: 0;
+    outline: 0;
+}
+.scrollbar
+{
+	overflow-y: auto;
+	margin-bottom: 25px;
+}
+
+/*
+ *  STYLE 1
+ */
+
+.style-1::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #24292f;
+}
+
+.style-1::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #24292f;
+}
+
+.style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+.animation-element.slide-right {
+  opacity: 0;
+  -moz-transition: all 500ms linear;
+  -webkit-transition: all 500ms linear;
+  -o-transition: all 500ms linear;
+  transition: all 500ms linear;
+  -moz-transform: translate3d(+100px, 0px, 0px);
+  -webkit-transform: translate3d(+100px, 0px, 0px);
+  -o-transform: translate(+100px, 0px);
+  -ms-transform: translate(+100px, 0px);
+  transform: translate3d(+100px, 0px, 0px);
+}
+
+.animation-element.slide-left.in-view {
+  opacity: 1;
+  -moz-transform: translate3d(0px, 0px, 0px);
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  -o-transform: translate(0px, 0px);
+  -ms-transform: translate(0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.animation-element.slide-left {
+  opacity: 0;
+  -moz-transition: all 500ms linear;
+  -webkit-transition: all 500ms linear;
+  -o-transition: all 500ms linear;
+  transition: all 500ms linear;
+  -moz-transform: translate3d(-100px, 0px, 0px);
+  -webkit-transform: translate3d(-100px, 0px, 0px);
+  -o-transform: translate(-100px, 0px);
+  -ms-transform: translate(-100px, 0px);
+  transform: translate3d(-100px, 0px, 0px);
+}
+
+.animation-element.slide-right.in-view {
+  opacity: 1;
+  -moz-transform: translate3d(0px, 0px, 0px);
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  -o-transform: translate(0px, 0px);
+  -ms-transform: translate(0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.msgWrapper {
+    padding: 0 65px;
+    position: relative;
+    width: 40%;
+}
+.avatarImg,
+ .timeStamp,
+ .avatarImg2,
+ .timeStamp2 {
+    position: absolute;
+    bottom: 40px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+.avatarImg {
+    left: 0;
+}
+.timeStamp {
+    right: 0;
+    line-height: 55px;
+    color: #707579;
+}
+.avatarImg2 {
+    right: 0;
+}
+.timeStamp2 {
+    left: 0;
+    line-height: 55px;
+    color: #707579;
+}

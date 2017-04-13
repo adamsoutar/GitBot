@@ -21,7 +21,6 @@ body {
 <?php
 
 //Definition of functions
-
 function printToChromeConsole($debugMsg) {
     echo "<script type='text/javascript'>console.log('".$debugMsg."')</script>";
 }
@@ -29,9 +28,12 @@ printToChromeConsole("User was assigned ticket: ".$_GET['token']);
 $userName = "User";
 function loadHistoryToText() {
     $handle = fopen("./users/history/".$_GET['token'].".txt", "r");
+    $mostRecentMessage = "";
+    $lastMessageCache = "";
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
             // process the line read.
+            //In this loop, we post the message 1 behind so we know when we hit the last message
             switch ($line[0]) {
                 case "0":
                     //Message is from the bot
@@ -42,6 +44,8 @@ function loadHistoryToText() {
                     displayUsrMessage(substr($line, 1, strlen($line) - 1));
                     break;
             }
+            $mostRecentMessage = $line;
+            $lastMessageCache = $line;
         }
 
         fclose($handle);

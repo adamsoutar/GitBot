@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>jQuery JSON Parsing example</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+html, body {
+    margin: 0;
+}
+.logoBar {
+    background-color: blue;
+    height: 10%;
+    width: 100%;
+}
+.midSection {
+    background-color: green;
+    height: 80%;
+    width: 100%;
+}
+.sendBar {
+    background-color: red;
+    height: 10%;
+    width: 100%;
+    margin: auto;
+}
+.centered {
+    margin: auto;
+}
+</style>
+</head>
+<body>
+
+<header class="logoBar">
+
+</header>
+
+<div class="midSection">
+<font face="Tahoma" color="#fffff" id="resBox">
+Result:
+</font>
+</div>
+
+<footer class="sendBar"><center>
+<input type="text" class="centered" id="sendBox"/> <button class="centered">Send</button>
+
+<script type="text/javascript">
+function sendMessageToListener() {
+    //Send message to PHP
+    $.ajax({type: "POST", url: "ajaxListener.php",dataType: "json", data: {msg : document.getElementById("sendBox").value}, success: function(result){
+        document.getElementById("resBox").innerHTML = result;
+    }});
+}
+</script>
+
+</center></footer>
+
+</body>
+</html>
