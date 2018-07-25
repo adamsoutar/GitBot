@@ -5,7 +5,7 @@ A ChatBot for navigating GitHub users, repos and organisations
 GitBot is a small project to create a GitHub ChatBot for web. It can be used to search for users or repos, and to view their details. It uses JSON responses from https://api.github.com/ and decodes then in PHP and jQuery AJAX.
 
 ### Hosting
-You can download GitBot and host it on any PHP-enabled server, but if you don't have one of those, it's officially hosted at: http://www.adybo.co.uk/sites/GitBot
+You can download GitBot and host it on any PHP-enabled server.
 
 ### Why?
 This ChatBot was created in three days as part of a work experience programme. It will be expanded, but is, for now, in a semi-finished form.
